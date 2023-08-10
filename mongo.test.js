@@ -1,15 +1,24 @@
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const { MongoClient } = require('mongodb');
 
 describe('insert', () => {
     let connection;
     let db;
 
+
     beforeAll(async () => {
-        connection = await new MongoClient(process.env.MONGO_URI, { useNewUrlParser: true })
+
+        // This will create an new instance of "MongoMemoryServer" and automatically start it
+        const mongod = await MongoMemoryServer.create()
+
+        const uri = mongod.getUri();
+        connection = await new MongoClient(uri, { useNewUrlParser: true })
         db = await connection.db("JESTER");
+        return mongod
     });
 
     it('should insert a doc into collection', async () => {
+        console.log(`test: ${connection}`)
         const users = db.collection('testing');
 
         const mockUser = { _id: '2', name: 'John' };
@@ -23,13 +32,3 @@ describe('insert', () => {
         await connection.close();
     });
 });
-
-
-// test('should post data to the DB', () => {
-
-// })
-
-// test('should get data from DB', () => {
-
-// })
-
