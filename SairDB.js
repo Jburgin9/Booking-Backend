@@ -9,17 +9,28 @@ const client = new MongoClient(process.env.MONGO_URI, {
 });
 
 class SairDB {
+    connection
+    db
+
     constructor(){}
 
     async connect(){
         console.log('connect called')
         try {
-            var connection = await client.connect()
+            connection = await client.connect()
             return "success"
             
         } catch(e) {
             return `failure: ${e}`
         }
+    }
+
+    async insertOne(){
+        console.log('insertOne Called')
+    }
+
+    tearDown(){
+        connection.close()
     }
 }
 
