@@ -1,11 +1,12 @@
 import gql from 'graphql-tag'
 
 const typeDefs = gql`
-# type Service {
-#   name: String
-#   details: String
-#   price: Float
-# }
+"A service is what is offered by creators on the platform"
+type Service {
+  name: String
+  details: String
+  price: Float
+}
 
 # type User {
 #   name: String
@@ -26,6 +27,10 @@ const typeDefs = gql`
 
 type Query {
   categoriesForHome: String
+}
+
+type Mutation {
+  createUser: String
 }
 `
 export default typeDefs

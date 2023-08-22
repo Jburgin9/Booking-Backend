@@ -8,15 +8,17 @@ const client = new MongoClient(process.env.MONGO_URI, {
     }
 });
 
-class SairDB {
+export default class SairDB {
     connection
     db
 
-    constructor(){}
+    constructor(){
+    }
 
     async connect(){
         console.log('connect called')
         try {
+            db = await client.db('sair').createCollection('category')
             connection = await client.connect()
             return "success"
             
@@ -25,13 +27,13 @@ class SairDB {
         }
     }
 
-    async insertOne(){
+    async insertOne(category){
         console.log('insertOne Called')
+        const result = await db.insertOne(category)
+        return result
     }
 
     tearDown(){
         connection.close()
     }
 }
-
-module.exports = SairDB

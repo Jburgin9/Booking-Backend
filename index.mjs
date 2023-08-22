@@ -8,6 +8,7 @@ import resolvers from './resolvers.mjs'
 import { expressMiddleware } from '@apollo/server/express4'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import typeDefs from './schema.mjs'
+import SairDB from './datasources/SairDB.mjs'
 
 const app = express()
 const httpServer = http.createServer(app);
@@ -20,5 +21,8 @@ app.use(
     expressMiddleware(server),
 );
 
-await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+await new Promise((resolve) => { 
+    console.log('listen called')
+    httpServer.listen({ port: 4000 }, resolve) 
+});
 console.log(`🚀 Server ready at http://localhost:4000/graphql`);
